@@ -55,4 +55,5 @@ export class No {
 		//atribui um novo valor a variavel "anterior"
 		this._anterior = no
 	}
+	// test de mudança
 }
