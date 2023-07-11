@@ -253,7 +253,7 @@ describe("Lista", () => {
 	});
 
 	test("ao remover head, a nova head deve ser o proximo elemento", () => {
-		let lista = new Lista("valor01", "valor02");
+		let lista = new Lista("valor01", "valor02");""
 
 		expect(lista.tamanho).toBe(2);
 
