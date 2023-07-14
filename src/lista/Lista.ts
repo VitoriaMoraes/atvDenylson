@@ -56,7 +56,7 @@ export class Lista {
 			this._head = NoAtual;
 			this._tail = NoAtual;
 
-			return this._tamanho
+			return this._tamanho, this.head;
 
 		  }
 		  //se já houver algum valor na lista, o Noatual será colocado na proxima posição
@@ -70,6 +70,7 @@ export class Lista {
 		  }
 		  //a quantidade de nós na lista é alterada.
 		  this._totalNos++;
+		  return this._head
 	}
 
 	 //o metodo valorEm vai receber um parametro (posição do tipo number)
@@ -227,7 +228,8 @@ export class Lista {
 		  valorAtual = valorAtual.anterior;
 		}
 	    //retorna o array com os valores 
-		return valores;
+		let ValoresInvert = valores.reverse();
+		return ValoresInvert;
 	  }
 
 	  //o metodo retorna o ultimo valor da lista 
@@ -284,6 +286,8 @@ export class Lista {
 		  this._tail = this._tail.anterior;
 		  //o ultimo elemento se torna null
 		  this._tail.proximo = null;
+
+		  this._tamanho--
 		}
 	    //a lista decresce pois estou removendo um elemento
 		this._totalNos--;
