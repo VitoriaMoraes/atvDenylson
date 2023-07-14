@@ -1,5 +1,4 @@
-import { No } from "./No";
-
+import { No } from "./No"
 export class Lista {
 	
 	private _totalNos: number = 0;//a variavel _totalNos recebe a quantidade de Nos(valores) inseridos na lista
@@ -7,51 +6,56 @@ export class Lista {
 	private _tail: No = null; //_tail é calda da lista, o "primeiro" elemento inserido é ao mesmo tempo a head e a tail
 	//desta forma, a tail sempre irá conter o "ultimo" elemento inserido
 
-	constructor(...valor:string []) {
+	constructor(...valor:any []) {
 		//instanciar valor para receber uma cadeia de strings 
-		//se o tamanho da lista for maior que zero
-		if(valor.length > 0){
-			//declara uma variável que irá remover o ultimo elemento do array 
-			let dado = valor.pop()
-			this.adicionarHead(dado)
-			this.adicionarTail(dado)
-		}
-		
+		//declara uma variável que irá remover o ultimo elemento do array 
+			this.adicionarTail(valor)
 	}
-
+		//exibir o valor da cabeça
+		public get head(): any {
+			//se ouver valores na lista, retorne
+			if (this._head) return this._head.valor;
+			//senão, retorne null
+			return null;
+		}
+	
+		//exibe a quantidade de nós na lista
+		public get tamanho(): number {
+			return this._totalNos;
+		}
+	
+		//exibe o ultimo elemento da lista
+		public get tail(): any{
+			return this._tail;
+		}
+	
+		//se não houver valores na lista retorna false
+		public get estarVazia(): boolean {
+			//se houver valores na lista retorna o tamanho da lista
+			return this.tamanho == 0;
+		}
+	
 	public adicionarHead(valor: any) {
 		//o metodo adicionarHead recebe um dado "valor" do tipo any.
-		let novoNo = new No(valor, this._head);
+		let NoAtual = new No(valor);
 		//a variavel novoNo recebe uma instancia do No(valor, proximo, anterior), e o valor de _head, inicialmente nulo
 		//o valor de _head é alterado sempre que um novo nó for adicionado, seu valor será o NO ATUAL.
-		this._head = novoNo;
-		//a quantidade de nós na lista é alterada.
-		this._totalNos++;
-	}
 
-
-	//exibir o valor da cabeça
-	public get head(): any {
-		//se ouver valores na lista, retorne
-		if (this._head) return this._head.valor;
-		//senão, retorne null
-		return null;
-	}
-
-	//exibe a quantidade de nós na lista
-	public get tamanho(): number {
-		return this._totalNos;
-	}
-
-	//exibe o ultimo elemento da lista
-	public get tail(): any{
-		return this._tail;
-	}
-
-	//se não houver valores na lista retorna false
-	public get estarVazia(): boolean {
-		//se houver valores na lista retorna o tamanho da lista
-		return this.tamanho == 0;
+		//se o tota de nos for igual a zero
+		if (this._totalNos === 0) {
+			//tanto a head qaunto a tail recebem o valor inserido, que passará a ser o primeiro valor da lista
+			this._head = NoAtual;
+			this._tail = NoAtual;
+		  }
+		  //se já houver algum valor na lista, o Noatual será colocado na proxima posição
+		   else {
+			//o novoNo
+			NoAtual.proximo = this._head;
+			this._head.anterior = NoAtual;
+			this._head = NoAtual;
+		  }
+		  //a quantidade de nós na lista é alterada.
+		  this._totalNos++;
 	}
 
 	 //o metodo valorEm vai receber um parametro (posição do tipo number)
@@ -80,21 +84,21 @@ export class Lista {
 	  //o metodo adicionarTail vai receber um parametro (valor do tipo any)
 	  public adicionarTail(valor: any) {
 		//declara uma constante novoNo para instanciar o valor do nó passado
-		const novoNo = new No(valor);
+		const ProximoNo = new No(valor);
 		
 		//se o total de nós for igual a zero (lista vazia)
 		if (this._totalNos === 0) {
-		  this._head = novoNo; //o valor da cabeça será o proprio valor passado
-		  this._tail = novoNo; //o valor da tail tambem será o primeiro valor inserido
+		  this._head = ProximoNo; //o valor da cabeça será o proprio valor passado
+		  this._tail = ProximoNo; //o valor da tail tambem será o primeiro valor inserido
 		}
 		//se o houver valores no totalNos (lista não está vazia)
 		 else {
 		  //o primero valor adicionado será a tail (ultimo elemento da lista)
-		  novoNo.anterior = this._tail;
+		  ProximoNo.anterior = this._tail;
 		  //e o proximo elemento será o nó adicionado
-		  this._tail.proximo = novoNo;
+		  this._tail.proximo = ProximoNo;
 		  //aponta para o novo nó
-		  this._tail = novoNo;
+		  this._tail = ProximoNo;
 		}
 		//atualiza a quantidade de nós na lista
 		this._totalNos++;
@@ -162,7 +166,7 @@ export class Lista {
 			novoNo.proximo = noAtual;
 			//novo nó recebe o valor anterior
 			novoNo.anterior = noAtual.anterior;
-			
+			//se houver algum valor na posição anterior ao nó
 			if (noAtual.anterior) {
 			  noAtual.anterior.proximo = novoNo;
 			}
