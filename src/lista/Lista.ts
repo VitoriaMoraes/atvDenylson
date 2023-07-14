@@ -2,19 +2,25 @@ import { No } from "./No"
 export class Lista {
 	
 	private _totalNos: number = 0;//a variavel _totalNos recebe a quantidade de Nos(valores) inseridos na lista
+	private _tamanho: number =0;
 	private _head: No = null; //_head é o valor ATUAL dentro da lista, se a lista tiver 5 elementos, a variavel assume o valor do ultimo elemento inserido
 	private _tail: No = null; //_tail é calda da lista, o "primeiro" elemento inserido é ao mesmo tempo a head e a tail
 	//desta forma, a tail sempre irá conter o "ultimo" elemento inserido
 
-	constructor(...valor:any []) {
+	constructor(...valor:string []) {
 		//instanciar valor para receber uma cadeia de strings 
 		//declara uma variável que irá remover o ultimo elemento do array 
-			this.adicionarTail(valor)
+			for (const valores of valor) {
+			  this.adicionarTail(valores);
+			}
+		  
 	}
 		//exibir o valor da cabeça
 		public get head(): any {
 			//se ouver valores na lista, retorne
-			if (this._head) return this._head.valor;
+			if (this._head) {
+				return this._head.valor;
+			}
 			//senão, retorne null
 			return null;
 		}
@@ -26,7 +32,10 @@ export class Lista {
 	
 		//exibe o ultimo elemento da lista
 		public get tail(): any{
-			return this._tail;
+			if(this._tail){
+				return this._tail.valor;
+			}
+			return null;
 		}
 	
 		//se não houver valores na lista retorna false
@@ -37,15 +46,18 @@ export class Lista {
 	
 	public adicionarHead(valor: any) {
 		//o metodo adicionarHead recebe um dado "valor" do tipo any.
-		let NoAtual = new No(valor);
+		const NoAtual = new No(valor);
 		//a variavel novoNo recebe uma instancia do No(valor, proximo, anterior), e o valor de _head, inicialmente nulo
 		//o valor de _head é alterado sempre que um novo nó for adicionado, seu valor será o NO ATUAL.
 
-		//se o tota de nos for igual a zero
+		//se o total de nos for igual a zero
 		if (this._totalNos === 0) {
 			//tanto a head qaunto a tail recebem o valor inserido, que passará a ser o primeiro valor da lista
 			this._head = NoAtual;
 			this._tail = NoAtual;
+
+			return this._tamanho
+
 		  }
 		  //se já houver algum valor na lista, o Noatual será colocado na proxima posição
 		   else {
@@ -53,6 +65,8 @@ export class Lista {
 			NoAtual.proximo = this._head;
 			this._head.anterior = NoAtual;
 			this._head = NoAtual;
+
+			this._tamanho++
 		  }
 		  //a quantidade de nós na lista é alterada.
 		  this._totalNos++;
@@ -105,13 +119,13 @@ export class Lista {
 	  }
 
 		//a função valores insere varios dados no nó em sequencia
-		public valores() {
+	public valores() {
 		//declara uma variável para receber o valor inserido
 		let valorAtual = this._head;
 		//declara um array para guardar os dados em sequencia, já que serão armazenados varios dados no nó
 		const valores = []
 		//enquanto houver um valor sendo passado
-		while(valorAtual.valor !== null){
+		while(valorAtual !== null){
 			//adiciona o valor no final do array
 			valores.push(valorAtual.valor)
 			//valorAtual recebe o valor do proximo valor inserido
@@ -239,7 +253,7 @@ export class Lista {
 	  //o metodo removerHead não tem retorno
 	  public removerHead(): void {
 		if (this._totalNos === 0) {
-		  return; // Lista vazia, não há elementos para ser removidos
+		  return null; // Lista vazia, não há elementos para ser removidos
 		}
 	    // A lista possui apenas um nó 
 		if (this._totalNos === 1) {
@@ -258,7 +272,7 @@ export class Lista {
 	  //metodo sem retorno
 	  public removerTail(): void {
 		if (this._totalNos === 0) {
-		  return; // Lista vazia
+		  return null; // Lista vazia
 		}
 	  
 		if (this._totalNos === 1) {
@@ -314,11 +328,11 @@ export class Lista {
 			//se a posição anterior existir
 			if (posicaoAtual.anterior) {
 				//posição anterior recebe o proximo elemento
-			  posicaoAtual.anterior = posicaoAtual.proximo;
+			  posicaoAtual.anterior.proximo = posicaoAtual.proximo;
 			}
 	  
 			if (posicaoAtual.proximo) {
-			  posicaoAtual.proximo = posicaoAtual.anterior;
+			  posicaoAtual.proximo.anterior = posicaoAtual.anterior;
 			}
 		  }
 		  //decresce o total de nos

@@ -1,10 +1,10 @@
 export class No {
 	private _valor: any; // declara variavel que recebe um tipo any
-	private _proximo: No | null = null; // declara as variavéis _proximo e _anterior que receberam dados do tipo NO ou null(no caso da lista não possuir elementos antes ou depois do NO)
-	private _anterior: No | null = null;// = null por padrão
+	private _proximo: No = null; // declara as variavéis _proximo e _anterior que receberam dados do tipo NO ou null(no caso da lista não possuir elementos antes ou depois do NO)
+	private _anterior: No = null;// = null por padrão
 	// variável: tipo_de_dado = valor padrão de instanciação 
 
-	constructor(valor:any, proximo?, anterior?) {
+	constructor(valor:any, proximo?:No, anterior?:No) {
 	//inicializar as variáveis
 		this._valor = valor;
 
@@ -16,9 +16,9 @@ export class No {
 		}
 	}
 	//o metodo IGUAL ao comparar um valor recebido, deve retornar true se for igual ao armazenado
-	public igual(outroValor: any): boolean {
+	public igual(proximoValor: any): boolean {
 	// o metodo "igual" recebe um dado "outroValor" do tipo any e retorna um boolean dependendo do resultado
-			return this._valor === outroValor;
+			return this._valor === proximoValor;
 	}
 
 	//metodos get e set 
@@ -30,30 +30,22 @@ export class No {
 
 	public get proximo() {
 		//se ouver valor dentro do "proximo" 
-		if(this._proximo){
 			return this._proximo;
-		}
-		//senão retorna null
-		return null;
 	}
 
-	public set proximo(no:No) {
+	public set proximo(novoNo:No) {
 		//atribui um novo valor a variavel "proximo"
-		this._proximo = no;
+		this._proximo = novoNo;
 	}
 
 	public get anterior() {
 		//se ouver um valor anterior
-		if(this._anterior){
 			return this._anterior;
-		}
-		//senão retorna null
-		return null;
 	}
 
-	public set anterior(no:No) {
+	public set anterior(novoNo:No) {
 		//atribui um novo valor a variavel "anterior"
-		this._anterior = no
+		this._anterior = novoNo
 	}
 	// test de mudança
 }
